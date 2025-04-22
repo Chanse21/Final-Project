@@ -4,26 +4,23 @@ using static UnityEditor.FilePathAttribute;
 public class CameraMovement : MonoBehaviour
 {
     public float sensitivity = 5.0f;
+    public GameObject cameraeyes;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        //Optional: Lock cursor
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Get mouse Input
-        float horizontalInput = Input.GetAxis("Mouse X");
-        float verticalInput = Input.GetAxis("Mouse Y");
+        //If my mouse goes left/right my body moves left/right
+        float xRot = Input.GetAxis("Mouse X") * sensitivity;
+        transform.Rotate(0, xRot, 0);
 
-        //Calculate rotation
-        //Space.Self: Rotation is relative to the camera's local axes.
-        //Space.World: Rotation is relative to the world's axes.
-        transform.Rotate(Vector3.right, -verticalInput * sensitivity, Space.Self); //Pitch(rotation around the x-axis of an object)
-        transform.Rotate(Vector3.right, -horizontalInput * sensitivity, Space.World); //Yaw(rotation around the Y-axis of an object, causing it to turn left or right)
-
-        //Optional: Lock cursor
-        Cursor.lockState = CursorLockMode.Locked;
+        //If my mouse goes up/down my aim (but not body) go up/down
+        float yRot = -Input.GetAxis("Mouse Y") * sensitivity;
+        cameraeyes.transform.Rotate(yRot, 0, 0);
     }
 }
