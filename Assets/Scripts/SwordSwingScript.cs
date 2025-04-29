@@ -6,6 +6,7 @@ public class SwordSwingScript : MonoBehaviour
 {
 
     public GameObject Sword;
+    public Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -18,7 +19,7 @@ public class SwordSwingScript : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            StartCoroutine(SwordSwing());
+            animator.SetTrigger("Attack");
         }
     }
 
