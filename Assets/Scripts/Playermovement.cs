@@ -7,11 +7,21 @@ public class Playermovement : MonoBehaviour
     public float jumpForce = 3.0f;
     public bool isGrounded;
     Rigidbody rb;
+    public float StrikeDamage;
+    float health, maxHealth = 15f;
+    FloatingHealthBar healthBar;
+
+    private void Awake()
+    {
+        healthBar = GetComponent<FloatingHealthBar>();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         jump = new Vector3(0.0f, 3.0f, 0.0f);
+        health = maxHealth;
+        healthBar.UpdateHealthBar(health, maxHealth);
     }
 
     void OnCollisionStay()
@@ -48,5 +58,30 @@ public class Playermovement : MonoBehaviour
             isGrounded = false;
         }
     }
-       
-   }
+
+    public void TakeDamage(float damageAmount)
+    {
+        health -= damageAmount;
+        healthBar.UpdateHealthBar(health, maxHealth);
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
+
+    void OnCollisionExit(Collision collision)
+    {
+        Debug.Log(collision.collider.tag);
+        if (collision.collider.CompareTag("Esword"))
+        {
+            TakeDamage(StrikeDamage);
+        }
+    }
+
+}
