@@ -7,7 +7,6 @@ public class SwordSwingScript : MonoBehaviour
 
     public GameObject Sword;
     public Animator animator;
-    public float strikeDuration = 10f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -24,11 +23,6 @@ public class SwordSwingScript : MonoBehaviour
         }
     }
 
-    private System.Collections.IEnumerator StrikeRoutine()
-    {
-        // Animation code goes here
-        yield return new WaitForSeconds(strikeDuration);
-    }
 
     IEnumerator SwordSwing()
     {

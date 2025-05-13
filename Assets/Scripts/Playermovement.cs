@@ -1,4 +1,6 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
 public class Playermovement : MonoBehaviour
 {
@@ -8,13 +10,11 @@ public class Playermovement : MonoBehaviour
     public bool isGrounded;
     Rigidbody rb;
     public float StrikeDamage;
-    float health, maxHealth = 15f;
-    FloatingHealthBar healthBar;
+    float health, maxHealth = 80f;
+    public FloatingHealthBar healthBar;
+    public AudioSource audioSource;
+    public AudioClip collisionSound;
 
-    private void Awake()
-    {
-        healthBar = GetComponent<FloatingHealthBar>();
-    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -81,6 +81,7 @@ public class Playermovement : MonoBehaviour
         if (collision.collider.CompareTag("Esword"))
         {
             TakeDamage(StrikeDamage);
+            audioSource.PlayOneShot(collisionSound);
         }
     }
 

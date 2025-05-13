@@ -7,12 +7,14 @@ public class EnemyScript : MonoBehaviour
     public float speed;
     public GameObject player;
     public float SwordDamage;
-    float health, maxHealth = 15f;
+    float health, maxHealth = 100f;
     FloatingHealthBar healthBar;
 
 
     private float distance;
 
+    public AudioSource audioSource;
+    public AudioClip collisionSound;
     private void Awake()
     {
         healthBar = GetComponentInChildren<FloatingHealthBar>();
@@ -55,6 +57,7 @@ public class EnemyScript : MonoBehaviour
         if (collision.collider.CompareTag("Sword"))
         {
          TakeDamage(SwordDamage);
+         audioSource.PlayOneShot(collisionSound);
         }
     }
 }
